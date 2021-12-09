@@ -9,6 +9,7 @@ from account.models import Cart, CartItem
 from category.models import Category
 from product.models import Product
 from specifications.models import Specification
+import requests
 
 
 class RegisterUser(CreateView):
@@ -50,20 +51,15 @@ def _cart_id(request):
     return card
 
 
-import telebot
-import requests
-
-
 def place_order(request):
-    bot = telebot.TeleBot("5098300808:AAGlUoW8u_D7y8hpOPkrTmhfUMlMkC8Qgig")
     card = Cart.objects.get(cart_id=_cart_id(request))
     card_items = CartItem.objects.filter(cart=card, is_active=True)
     text = ''
     for i in card_items:
-        text += f"User => {request.user}\n Bought products: \n Product name => {i.product.product_name};\n Product price => $ {i.product.price}"
+        text += f"User => {request.user}\n Bought products: \n\n\n Product name => {i.product.product_name};\n Product price => $ {i.product.price}"
     # O`zingizni telegram idngiz
-    bot.send_message(849928658, text=text)
-    requests.get(url=f'https://api.telegram.org/bot5098300808:AAGlUoW8u_D7y8hpOPkrTmhfUMlMkC8Qgig/sendMessage?chat_id=849928658&text={text}')
+    requests.get(url=f'https://api.telegram.org/bot5098300808:AAGlUoW8u_D7y8hpOPkrTmhfUMlMkC8Qgig/sendMessage?chat_id'
+                     f'=849928658&text={text}')
     card_items.delete()
     return redirect('home')
 
