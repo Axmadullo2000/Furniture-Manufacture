@@ -56,7 +56,8 @@ def place_order(request):
     card_items = CartItem.objects.filter(cart=card, is_active=True)
     text = ''
     for i in card_items:
-        text += f"User => {request.user}\n Bought products: \n\n\n Product name => {i.product.product_name};\n Product price => $ {i.product.price}"
+        text += f"User => {request.user}\n Bought products: \n\n\n Product name => {i.product.product_name};\n " \
+                f"Quantity: {i.quantity}; \n Product price => $ {i.product.price} "
     # O`zingizni telegram idngiz
     requests.get(url=f'https://api.telegram.org/bot5098300808:AAGlUoW8u_D7y8hpOPkrTmhfUMlMkC8Qgig/sendMessage?chat_id'
                      f'=849928658&text={text}')

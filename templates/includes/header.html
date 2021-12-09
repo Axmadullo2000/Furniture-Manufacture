@@ -25,6 +25,7 @@
                         <div class="login-sr">
                            <div class="login-signup">
                               <ul>
+                                    <li style="text-transform: capitalize;">{{ request.user }}</li>
                                   {% if request.user.is_authenticated %}
                                     <li><a href="{% url 'logout' %}">Logout</a></li>
                                   {% else %}
