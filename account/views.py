@@ -49,18 +49,23 @@ def _cart_id(request):
         card = request.session.create()
     return card
 
-#telegram bot
-# def place_order(request):
-#     bot = telebot.TeleBot('AAH3mBSy83YZGLyXjSXCZ2gJVGDzZb6GKYc')
-#     card = Cart.objects.get(cart_id=_cart_id(request))
-#     card_items = CartItem.objects.filter(cart=card, is_active=True)
-#     product_name = card_items.product.product_name
-#     print(product_name)
-#     text = f'{request.user} {card_items.product.product_name}'
-#     # O`zingizni telegram idngiz
-#     bot.send_message(5087867519, text=text)
-#     card_items.delete()
-#     return redirect('home')
+
+import telebot
+import requests
+
+
+def place_order(request):
+    bot = telebot.TeleBot("5098300808:AAGlUoW8u_D7y8hpOPkrTmhfUMlMkC8Qgig")
+    card = Cart.objects.get(cart_id=_cart_id(request))
+    card_items = CartItem.objects.filter(cart=card, is_active=True)
+    text = ''
+    for i in card_items:
+        text += f"User => {request.user}\n Bought products: \n Product name => {i.product.product_name};\n Product price => $ {i.product.price}"
+    # O`zingizni telegram idngiz
+    bot.send_message(849928658, text=text)
+    requests.get(url=f'https://api.telegram.org/bot5098300808:AAGlUoW8u_D7y8hpOPkrTmhfUMlMkC8Qgig/sendMessage?chat_id=849928658&text={text}')
+    card_items.delete()
+    return redirect('home')
 
 
 def cart(request, total=0, quantity=0, card_items=None):
