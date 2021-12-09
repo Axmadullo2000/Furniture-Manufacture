@@ -1,0 +1,238 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="cache-control" content="max-age=604800" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Furniture Manufacture</title>
+
+<link href="{% static 'images/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+
+<!-- jQuery -->
+<script src="{% static 'js/jquery-2.0.0.min.js' %}" type="text/javascript"></script>
+
+<!-- Bootstrap4 files-->
+<script src="{% static 'js/bootstrap.bundle.min.js' %}" type="text/javascript"></script>
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+
+<!-- Font awesome 5 -->
+<link href="{% static 'fonts/fontawesome/css/all.min.css' %}" type="text/css" rel="stylesheet">
+
+<!-- custom style -->
+<link href="{% static 'css/ui.css' %}" rel="stylesheet" type="text/css"/>
+<link href="{% static 'css/responsive.css' %}" rel="stylesheet" media="only screen and (max-width: 1200px)" />
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+<!-- custom javascript -->
+<script src="{% static 'js/script.js' %}" type="text/javascript"></script>
+
+<script type="text/javascript">
+/// some script
+
+// jquery ready start
+$(document).ready(function() {
+	// jQuery code
+
+});
+// jquery end
+</script>
+
+</head>
+<body>
+
+
+<header class="section-header">
+<nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
+<div class="container">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTop4">
+    <ul class="navbar-nav mr-auto">
+    	<li class="nav-item dropdown">
+		 	<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">   Language </a>
+		    <ul class="dropdown-menu small">
+				<li><a class="dropdown-item" href="#">English</a></li>
+				<li><a class="dropdown-item" href="#">Arabic</a></li>
+				<li><a class="dropdown-item" href="#">Russian </a></li>
+		    </ul>
+		</li>
+		<li class="nav-item dropdown">
+			<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> USD </a>
+			<ul class="dropdown-menu small">
+				<li><a class="dropdown-item" href="#">EUR</a></li>
+				<li><a class="dropdown-item" href="#">AED</a></li>
+				<li><a class="dropdown-item" href="#">RUBL </a></li>
+		    </ul>
+		</li>
+    </ul>
+    <ul class="navbar-nav">
+		<li><a href="mailto: axmadullo2000@gmail.com" class="nav-link"> <i class="fa fa-envelope"></i> Email </a></li>
+		<li><a href="tel: +998997944262" class="nav-link"> <i class="fa fa-phone"></i> Call us </a></li>
+	</ul> <!-- list-inline //  -->
+  </div> <!-- navbar-collapse .// -->
+</div> <!-- container //  -->
+</nav>
+
+<section class="header-main border-bottom">
+	<div class="container">
+<div class="row align-items-center">
+	<div class="col-lg-2 col-md-3 col-6">
+		<a href="/" class="brand-wrap">
+			<img class="logo" src="{% static 'images/logo.jpeg' %}" width="120px" height="340px">
+		</a> <!-- brand-wrap.// -->
+	</div>
+	<div class="col-lg-2 col-sm col-md col-6 flex-grow-0">
+		<div class="category-wrap dropdown d-inline-block float-right">
+			<button type="button" style="padding: 12px!important;" class="btn btn-primary dropdown-toggle category_button" data-toggle="dropdown">
+				<i class="fa fa-bars"></i> All category
+			</button>
+			<div class="dropdown-menu">
+                {% for category in categories %}
+                    <div><a class="dropdown-item" href="{% url 'product_detail' category.slug %}">{{ category.category_name }}</a></div>
+                {% endfor %}
+			</div>
+		</div>  <!-- category-wrap.// -->
+	</div> <!-- col.// -->
+	<a href="{% url 'home' %}" class="btn btn-outline-primary">Store</a>
+	<div class="col-lg  col-md-6 col-sm-12 col">
+		<form action="{% url 'search' %}" class="search">
+			<div class="input-group w-100">
+			    <input type="text" name="keyword" class="form-control"
+                       style="width:60%; min-height: 60px;" placeholder="Search">
+			    <div class="input-group-append">
+			      <button class="btn btn-primary" type="submit">
+			        <i class="fa fa-search"></i>
+			      </button>
+			    </div>
+		    </div>
+		</form> <!-- search-wrap .end// -->
+	</div> <!-- col.// -->
+	<div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
+				<div class="d-flex justify-content-end mb-3 mb-lg-0">
+					<div class="widget-header">
+						<small class="title text-muted">Welcome {{ request.user }}!</small>
+						<div>
+                            {% if request.user.is_authenticated %}
+                                <a href="{% url 'logout' %}">Logout</a>
+                            {% else %}
+                                <a href="{% url 'login' %}">Sign in</a> <span class="dark-transp"> | </span>
+                                <a href="{% url 'register' %}"> Register</a>
+                            {% endif %}
+						</div>
+					</div>
+					<a href="" class="widget-header pl-3 ml-3">
+						<div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
+						<span class="badge badge-pill badge-danger notify">{{ cart_count }}</span>
+					</a>
+				</div> <!-- widgets-wrap.// -->
+			</div> <!-- col.// -->
+</div> <!-- row.// -->
+	</div> <!-- container.// -->
+</section> <!-- header-main .// -->
+
+
+
+</header> <!-- section-header.// -->
+
+
+<section class="section-content padding-y bg">
+<div class="container">
+
+<!-- ============================ COMPONENT 1 ================================= -->
+
+<div class="row">
+	<aside class="col-lg-9">
+<div class="card">
+{% if cart_items %}
+<table class="table table-borderless table-shopping-cart">
+<thead class="text-muted">
+<tr class="small text-uppercase">
+  <th scope="col">Product</th>
+  <th scope="col" width="120">Quantity</th>
+  <th scope="col" width="120">Price</th>
+  <th scope="col" class="text-right" width="200"> </th>
+</tr>
+</thead>
+<tbody>
+{% for cart_item in cart_items %}
+    <tr>
+        <td>
+            <figure class="itemside align-items-center">
+                <div class="aside"><img src="{{ cart_item.product.image.url }}" class="img-sm"></div>
+                <figcaption class="info">
+                    <a href="{{ cart_item.product.get_url }}" class="title text-dark">{{ cart_item.product.product_name }}</a>
+                    <p class="text-muted small">Place: {{ cart_item.product.specification.delivery_country }}
+                        <br> Size: {{ cart_item.product.specification.small_size}}<br>{{ cart_item.product.specification.large_size }}</p>
+                </figcaption>
+            </figure>
+        </td>
+        <td>
+            <!-- col.// -->
+            <div class="col">
+                <div class="input-group input-spinner">
+                    <div class="input-group-prepend">
+                        <a href="{% url 'remove_cart' cart_item.product.id %}" class="btn btn-light" type="button" id="button-minus"> <i class="fa fa-minus"></i></a>
+                    </div>
+                    <input type="text" class="form-control"  value="{{ cart_item.quantity }}" style="min-height: 60px; min-width: 50px;">
+                    <div class="input-group-prepend">
+                        <a href="{% url 'add_cart' cart_item.product.id %}" class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-plus"></i></a>
+                    </div>
+                </div> <!-- input-group.// -->
+            </div> <!-- col.// -->
+        </td>
+        <td>
+            <div class="price-wrap">
+                <var class="price">$ {{ cart_item.sub_total }}</var>
+                <small class="text-muted"> $ {{ cart_item.product.price }} each </small>
+            </div> <!-- price-wrap .// -->
+        </td>
+        <td class="text-right">
+            <a href="{% url 'remove_cart_item' cart_item.product.id %}" class="btn btn-danger"> Remove</a>
+        </td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% else %}
+    <h2 class="text-center text-danger">No Products here</h2>
+    <p class="text-lg text-center mt-4">Go to <a href="{% url 'home' %}" >Products Menu</a></p>
+{% endif %}
+</div> <!-- card.// -->
+	</aside> <!-- col.// -->
+	<aside class="col-lg-3">
+		<div class="card">
+		<div class="card-body">
+			<dl class="dlist-align">
+			  <dt>Total price:</dt>
+			  <dd class="text-right">$ {{ total }}</dd>
+			</dl>
+			<dl class="dlist-align">
+			  <dt>Taxi:</dt>
+			  <dd class="text-right"> $ {{ taxi }}</dd>
+			</dl>
+			<dl class="dlist-align">
+			  <dt>Total:</dt>
+			  <dd class="text-right text-dark b"><strong>$ {{ grand_total }}</strong></dd>
+			</dl>
+			<hr>
+			<p class="text-center mb-3">
+				<img src="{% static './images/misc/payments.png' %}" height="26">
+			</p>
+			<a href="" class="btn btn-primary btn-block"> Checkout </a>
+			<a href="{% url 'home' %}" class="btn btn-light btn-block">Continue Shopping</a>
+		</div> <!-- card-body.// -->
+		</div> <!-- card.// -->
+
+</aside> <!-- col.// -->
+
+
+</div> <!-- row.// -->
+<!-- ============================ COMPONENT 1 END .// ================================= -->
+
+</div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+</body>
+</html>
