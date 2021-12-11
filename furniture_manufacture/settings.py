@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-=#f4$h60tur=f8(6r0_-#5r)3qx2u#^oenkqpras-#*wvg6tk*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['furnituremanifacture.pythonanywhere.com', ]
 
 
 # Application definition
@@ -117,15 +117,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
-
-if DEBUG:
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+# Change path in *_ROOT according to your static and media path
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR / 'media')
+STATIC_URL = '/static/'
+STATIC_ROOT = '/home/furnituremanifacture/Furniture-Manufacture/static'
+MEDIA_ROOT = '/home/furnituremanifacture/Furniture-Manufacture/media'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
