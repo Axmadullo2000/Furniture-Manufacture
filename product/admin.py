@@ -8,3 +8,4 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('product_name', 'slug', 'image', 'image_2', 'description')
     prepopulated_fields = {'slug': ('product_name', )}
 
+

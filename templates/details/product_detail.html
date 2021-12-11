@@ -84,10 +84,13 @@
                         </div>
                         <div class="btn-dit-list clearfix">
                            <div class="left-dit-p">
-                              <div class="prod-btn">
-                                 <a href="#"><i class="fa fa-star" aria-hidden="true"></i> Save to wishlist</a>
-                                 <a href="#"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like this</a>
-                                 <p>23 likes</p>
+                               <div class="prod-btn">
+                                   {% if in_cart %}
+                                       <a href="{% url 'cart' %}" class="text-danger" style="background: red; color: silver;"><i class="fa fa-star" aria-hidden="true"></i> Added to wishlist</a>
+                                  {% else %}
+                                      <a href="{% url 'add_cart' single_product.id  %}"><i class="fa fa-star" aria-hidden="true"></i> Save to wishlist</a>
+                                 {% endif %}
+
                               </div>
                            </div>
                            <div class="right-dit-p">
@@ -230,7 +233,7 @@
                                  <a href="#" tabindex="0">$ {{ product.price }}</a>
                               </div>
                               <div class="prod-btn">
-                                 <a href="#"><i class="fa fa-star" aria-hidden="true"></i> Save to wishlist</a>
+                                 <a href="{% url 'add_cart' single_product.id %}"><i class="fa fa-star" aria-hidden="true"></i> Save to wishlist</a>
                                  <a href="#"><i class="fa fa-thumbs-up" aria-hidden="true"></i> Like this</a>
                                  <p>23 likes</p>
                               </div>

@@ -1,47 +1,14 @@
 from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse_lazy
-from django.views.generic import CreateView
-from django.contrib.auth import logout, login
+from django.contrib.auth import logout, login, authenticate
+
+from account.forms import UserRegisterForm
 from account.models import Cart, CartItem
 from category.models import Category
 from product.models import Product
 from specifications.models import Specification
 import requests
-
-
-class RegisterUser(CreateView):
-    form_class = UserCreationForm
-    template_name = 'account/register.html'
-    success_url = reverse_lazy('login')
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return dict(list(context.items()))
-
-    def get_success_url(self):
-        return reverse_lazy('home')
-
-    def form_valid(self, form):
-        user = form.save()
-        login(self.request, user)
-        return redirect('home')
-
-
-class LoginUser(LoginView):
-    form_class = AuthenticationForm
-    template_name = 'account/login.html'
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return dict(list(context.items()))
-
-
-def logout_user(request):
-    logout(request)
-    return redirect('login')
 
 
 def _cart_id(request):
@@ -54,15 +21,19 @@ def _cart_id(request):
 def place_order(request):
     card = Cart.objects.get(cart_id=_cart_id(request))
     card_items = CartItem.objects.filter(cart=card, is_active=True)
-    text = ''
+    user = User.objects.get(username=request.user)
+    text = f'\t\t\tКлиент -> {request.user} \n \t\t\tпочтовый адрес -> {user.email}'
     for i in card_items:
-        text += f"User => {request.user}\n Bought products: \n\n\n Product name => {i.product.product_name};\n " \
-                f"Quantity: {i.quantity}; \n Product price => $ {i.product.price} "
-    # O`zingizni telegram idngiz
+        text += f"\n\n\t\t\t\t\t\t\tКупленные мебели: \n\nНазвание -> {i.product.product_name} \n\nКоличество -> {i.quantity} " \
+                f"\n\nЦена Мебели -> {i.product.price} $ \n\nТакси -> {i.percent()} \n\nОбщая сумма -> {i.over_all()} $"
     requests.get(url=f'https://api.telegram.org/bot5098300808:AAGlUoW8u_D7y8hpOPkrTmhfUMlMkC8Qgig/sendMessage?chat_id'
                      f'=849928658&text={text}')
     card_items.delete()
-    return redirect('home')
+    return redirect('condition_order')
+
+
+def condition_order(request):
+    return render(request, 'place_order.html')
 
 
 def cart(request, total=0, quantity=0, card_items=None):
@@ -146,10 +117,39 @@ def remove_cart_item(request, product_id):
     return redirect('cart')
 
 
-def logout_request(request):
+def register(request):
+    template_name = 'account/register.html'
+    form = UserRegisterForm()
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():  # addded profile form
+            form.save()
+            user = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for user {user}!')
+            return redirect('login')
+    context = {
+        'form': form
+    }
+    return render(request, template_name, context)
+
+
+def log_in(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.info(request, 'Username OR password is incorrect')
+
+    return render(request, 'account/login.html')
+
+
+def log_out(request):
     logout(request)
-    messages.info(request, "You have successfully logged out.")
-    return redirect("home")
+    return redirect('login')
 
 
 def about_us(request):

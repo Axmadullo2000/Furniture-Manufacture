@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row" style="margin: 50px 0; text-align: center">
+        <h2>Your shopping is done! </h2>
+            <p style="margin-top: 30px;">Do you want to buy some products
+                <span style="text-transform: capitalize">{{ request.user }}</span>?
+                Go to <a href="{% url 'home' %}" style="color: red; text-decoration:
+                underline">here</a></p>
+        </div>
+    </div>
+{% endblock %}
