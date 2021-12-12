@@ -41,7 +41,7 @@ $(document).ready(function() {
 </head>
 <body>
 
-
+<div id="google_translate_element"></div>
 <header class="section-header">
 <nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
 <div class="container">
@@ -49,24 +49,6 @@ $(document).ready(function() {
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarTop4">
-    <ul class="navbar-nav mr-auto">
-    	<li class="nav-item dropdown">
-		 	<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">   Language </a>
-		    <ul class="dropdown-menu small">
-				<li><a class="dropdown-item" href="#">English</a></li>
-				<li><a class="dropdown-item" href="#">Arabic</a></li>
-				<li><a class="dropdown-item" href="#">Russian </a></li>
-		    </ul>
-		</li>
-		<li class="nav-item dropdown">
-			<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> USD </a>
-			<ul class="dropdown-menu small">
-				<li><a class="dropdown-item" href="#">EUR</a></li>
-				<li><a class="dropdown-item" href="#">AED</a></li>
-				<li><a class="dropdown-item" href="#">RUBL </a></li>
-		    </ul>
-		</li>
-    </ul>
     <ul class="navbar-nav">
 		<li><a href="mailto: axmadullo2000@gmail.com" class="nav-link"> <i class="fa fa-envelope"></i> Email </a></li>
 		<li><a href="tel: +998997944262" class="nav-link"> <i class="fa fa-phone"></i> Call us </a></li>
@@ -220,7 +202,7 @@ $(document).ready(function() {
 			<p class="text-center mb-3">
 				<img src="{% static './images/misc/payments.png' %}" height="26">
 			</p>
-			<a href="{% url 'place_order' %}" class="btn btn-primary btn-block"> Checkout </a>
+			<a href="{% url 'place_order' %}" class="btn btn-primary btn-block"> To Order </a>
 			<a href="{% url 'home' %}" class="btn btn-light btn-block">Continue Shopping</a>
 		</div> <!-- card-body.// -->
 		</div> <!-- card.// -->
@@ -234,5 +216,11 @@ $(document).ready(function() {
 </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
