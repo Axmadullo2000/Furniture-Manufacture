@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=#f4$h60tur=f8(6r0_-#5r)3qx2u#^oenkqpras-#*wvg6tk*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*', ]
 
@@ -71,7 +71,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'PASSWORD': 'newpassword',  # измени пароль на свой
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
@@ -119,7 +119,7 @@ STATIC_URL = '/static/'
 if DEBUG:
     STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 import dj_database_url
 db_from_env = dj_database_url.config()
