@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=#f4$h60tur=f8(6r0_-#5r)3qx2u#^oenkqpras-#*wvg6tk*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*', ]
 
@@ -116,7 +116,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] # для локального запуска приложения
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 import dj_database_url
 db_from_env = dj_database_url.config()
