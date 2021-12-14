@@ -64,11 +64,12 @@ def search(request):
         keyword = request.GET['keyword']
         if keyword:
             products = Product.objects.filter(
-                product_name__contains=keyword
+                product_name__icontains=keyword
             )
         else:
             products = Product.objects.all()
         products_count = products.count()
+    print(products)
     context = {
         'keyword': keyword,
         'products': products,
