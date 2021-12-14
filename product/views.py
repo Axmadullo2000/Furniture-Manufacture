@@ -45,13 +45,13 @@ def product_detail(request, category_slug, product_slug):
     except Exception as e:
         raise e
     try:
-        single_product = Product.objects.get(category__slug=category_slug, slug=product_slug)
+        single = Product.objects.get(category__slug=category_slug, slug=product_slug)
         in_cart = CartItem.objects.filter(cart__cart_id=_cart_id(request), product=single_product).exists()
     except Exception as e:
         raise e
     context = {
-        'single_product': single_product,
-        'product': products,
+        'single_product': single,
+        'products': products,
         'in_cart': in_cart,
     }
     return render(request, 'details/product_detail.html', context)
