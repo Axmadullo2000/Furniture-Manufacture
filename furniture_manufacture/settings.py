@@ -116,8 +116,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] # для локального запуска приложения
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')] # для локального запуска приложения
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 import dj_database_url
 db_from_env = dj_database_url.config()
