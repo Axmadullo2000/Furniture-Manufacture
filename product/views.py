@@ -38,11 +38,11 @@ def Store(request, category_slug=None):
 
 def product_detail(request, category_slug, product_slug):
     single_product = Product.objects.get(category__slug=category_slug, slug=product_slug)
-    products = Product.objects.all().exclude(slug=product_slug)
+    single = Product.objects.get(category__slug=category_slug)
     in_cart = CartItem.objects.filter(cart__cart_id=_cart_id(request), product=single_product).exists()
     context = {
         'single_product': single_product,
-        'products': products,
+        'products': single,
         'in_cart': in_cart,
     }
     return render(request, 'details/product_detail.html', context)
