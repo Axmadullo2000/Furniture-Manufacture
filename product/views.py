@@ -38,10 +38,9 @@ def Store(request, category_slug=None):
 
 def product_detail(request, category_slug, product_slug):
     single_product = Product.objects.get(category__slug=category_slug, slug=product_slug)
-    products = Product.objects.exclude(slug=product_slug). \
-        annotate(similarity=TrigramSimilarity('product_name',
-                                              single_product.product_name)).filter(similarity__gt=0.3)
-    # products = Product.objects.all().exclude(slug=product_slug)
+    products = Product.objects.annotate(similarity=TrigramSimilarity('product_name',
+                                                                     single_product.product_name)).filter(
+        similarity__gt=0.3)
     single = Product.objects.get(category__slug=category_slug, slug=product_slug)
     in_cart = CartItem.objects.filter(cart__cart_id=_cart_id(request), product=single_product).exists()
     context = {
