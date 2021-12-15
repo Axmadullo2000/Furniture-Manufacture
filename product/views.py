@@ -37,18 +37,12 @@ def Store(request, category_slug=None):
 
 
 def product_detail(request, category_slug, product_slug):
-    try:
-        single_product = Product.objects.get(category__slug=category_slug, slug=product_slug)
-        products = Product.objects.exclude(slug=product_slug). \
-            annotate(similarity=TrigramSimilarity('product_name',
-                                                  single_product.product_name)).filter(similarity__gt=0.3)
-    except Exception as e:
-        raise e
-    try:
-        single = Product.objects.get(category__slug=category_slug, slug=product_slug)
-        in_cart = CartItem.objects.filter(cart__cart_id=_cart_id(request), product=single_product).exists()
-    except Exception as e:
-        raise e
+    single_product = Product.objects.get(category__slug=category_slug, slug=product_slug)
+    products = Product.objects.exclude(slug=product_slug). \
+        annotate(similarity=TrigramSimilarity('product_name',
+                                              single_product.product_name)).filter(similarity__gt=0.3)
+    single = Product.objects.get(category__slug=category_slug, slug=product_slug)
+    in_cart = CartItem.objects.filter(cart__cart_id=_cart_id(request), product=single_product).exists()
     context = {
         'single_product': single,
         'products': products,
